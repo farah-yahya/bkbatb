@@ -23,9 +23,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest registerRequest) {
-        if(registerRequest.getPrivilege() == null){
-            registerRequest.setPrivilege(Privilege.NONE);
-        }
+
         var user = User.builder()
                 .email(registerRequest.getEmail())
                 .firstName(registerRequest.getFirstName())
@@ -33,7 +31,7 @@ public class AuthenticationService {
                 .status(true)
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(Role.USER)
-                .privilege(registerRequest.getPrivilege())
+                .privilege(Privilege.NONE)
                 .build();
         utilisateurRepository.save(user);
         var jwt = jwtService.generateToken(user);
