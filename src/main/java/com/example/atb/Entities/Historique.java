@@ -23,7 +23,6 @@ public class Historique {
     int nombreModifications;
     Date datePrise;
     Date dateRetour;
-    String etat;
-    @OneToOne
+    @ManyToOne
     User user;
 }

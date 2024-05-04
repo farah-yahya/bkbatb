@@ -1,5 +1,6 @@
 package com.example.atb.Entities.Auth;
 
+import com.example.atb.Entities.Privilege;
 import com.example.atb.Entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,4 +19,5 @@ public class RegisterRequest {
     private boolean status;
     private String password;
     private Role role;
+    private Privilege privilege;
 }

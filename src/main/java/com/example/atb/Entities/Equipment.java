@@ -25,4 +25,5 @@ public class Equipment {
     String category;
     Date entree ;
     Date sortie ;
+    String etat;
 }

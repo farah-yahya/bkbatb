@@ -1,7 +1,9 @@
 package com.example.atb.Service.Impl;
 
 
+import com.example.atb.Entities.Privilege;
 import com.example.atb.Entities.Response.UserResponse;
+import com.example.atb.Entities.Role;
 import com.example.atb.Entities.User;
 import com.example.atb.Repository.UserRepository;
 import com.example.atb.Service.UserService;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
         u.setFirstName(user.getFirstName());
         u.setLastName(user.getLastName());
         u.setEmail(user.getEmail());
+        u.setPrivilege(Privilege.valueOf(user.getPrivilege().name()));
         User userRes =  userRepository.save(u);
         return UserResponse.builder()
                 .id(userRes.getId())
@@ -48,6 +51,8 @@ public class UserServiceImpl implements UserService {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
+                .privilege(user.getPrivilege())
+                .status(user.getStatus())
                 .build();
     }
 }

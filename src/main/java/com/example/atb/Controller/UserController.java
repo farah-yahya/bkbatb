@@ -5,6 +5,7 @@ import com.example.atb.Entities.Response.UploadFileResponse;
 import com.example.atb.Entities.Response.UserRequest;
 import com.example.atb.Entities.Response.UserResponse;
 import com.example.atb.Entities.User;
+import com.example.atb.Repository.UserRepository;
 import com.example.atb.Service.EmailService;
 import com.example.atb.Service.FileService;
 import com.example.atb.Service.UserService;
@@ -29,6 +30,7 @@ public class UserController {
     private final UserService userClientService;
     private final FileService dbFileStorageService;
     private final EmailService emailService;
+    private final UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUserClient() {
@@ -41,6 +43,8 @@ public class UserController {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
+                .status(user.getStatus())
+                .privilege(user.getPrivilege())
                 .build();
         return new ResponseEntity<UserResponse>(us, HttpStatus.OK);
     }
@@ -50,6 +54,7 @@ public class UserController {
         u.setFirstName(user.getFirstName());
         u.setLastName(user.getLastName());
         u.setEmail(user.getEmail());
+        u.setPrivilege(user.getPrivilege());
         return new ResponseEntity<UserResponse>(userClientService.updateUser(id, u), HttpStatus.ACCEPTED);
     }
     @PostMapping("/uploadFile/{userId}")
@@ -75,5 +80,10 @@ public class UserController {
         User user = userClientService.getUserById(userId);
         emailService.sendEmailWithTemplate(user);
         return new ResponseEntity<String>("Mail sent", HttpStatus.OK);
+    }
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable long id){
+        userRepository.deleteById(id);
+        return new ResponseEntity<String>("User deleted", HttpStatus.OK);
     }
 }

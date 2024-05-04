@@ -29,7 +29,6 @@ public class HistoriqueServiceImpl implements HistoriqueService {
     public Historique updateHistorique(long id, Historique historique) {
         if (historiqueRepository.existsById(id)) {
             historique.setId(id);
-            historique.setEtat(historique.getEtat());
             historique.setDatePrise(historique.getDatePrise());
             historique.setDateRetour(historique.getDateRetour());
             historique.setNombreModifications(historique.getNombreModifications());

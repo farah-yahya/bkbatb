@@ -4,6 +4,7 @@ package com.example.atb.Service.Impl;
 import com.example.atb.Entities.Auth.AuthenticationRequest;
 import com.example.atb.Entities.Auth.AuthenticationResponse;
 import com.example.atb.Entities.Auth.RegisterRequest;
+import com.example.atb.Entities.Privilege;
 import com.example.atb.Entities.Role;
 import com.example.atb.Entities.User;
 import com.example.atb.Repository.UserRepository;
@@ -22,6 +23,9 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest registerRequest) {
+        if(registerRequest.getPrivilege() == null){
+            registerRequest.setPrivilege(Privilege.NONE);
+        }
         var user = User.builder()
                 .email(registerRequest.getEmail())
                 .firstName(registerRequest.getFirstName())
@@ -29,6 +33,7 @@ public class AuthenticationService {
                 .status(true)
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(Role.USER)
+                .privilege(registerRequest.getPrivilege())
                 .build();
         utilisateurRepository.save(user);
         var jwt = jwtService.generateToken(user);
