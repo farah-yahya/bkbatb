@@ -27,6 +27,7 @@ import java.util.List;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userClientService;
     private final FileService dbFileStorageService;
     private final EmailService emailService;
@@ -34,10 +35,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUserClient() {
+
         return new ResponseEntity<List<UserResponse>>(userClientService.getUser(), HttpStatus.OK);
     }
     @GetMapping(path = "/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable long id) {
+
         User user = userClientService.getUserById(id);
         UserResponse us =UserResponse.builder()
                 .firstName(user.getFirstName())
@@ -46,19 +49,24 @@ public class UserController {
                 .status(user.getStatus())
                 .privilege(user.getPrivilege())
                 .build();
+
         return new ResponseEntity<UserResponse>(us, HttpStatus.OK);
     }
     @PutMapping(path = "/{id}")
+
     public ResponseEntity<UserResponse> updateUser(@PathVariable long id, @RequestBody UserRequest user) {
         User u = new User();
         u.setFirstName(user.getFirstName());
         u.setLastName(user.getLastName());
         u.setEmail(user.getEmail());
         u.setPrivilege(user.getPrivilege());
+
         return new ResponseEntity<UserResponse>(userClientService.updateUser(id, u), HttpStatus.ACCEPTED);
     }
     @PostMapping("/uploadFile/{userId}")
+
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, @PathVariable long userId) {
+
         FileEntity dbFile = dbFileStorageService.storeFile(file, userId);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
@@ -70,7 +78,6 @@ public class UserController {
     public ResponseEntity<Resource> downloadFile(@PathVariable long userId) {
         // Load file from database
         FileEntity dbFile = dbFileStorageService.getFile(userId);
-
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(dbFile.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFileName() + "\"")
                 .body(new ByteArrayResource(dbFile.getData()));
@@ -83,6 +90,7 @@ public class UserController {
     }
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable long id){
+
         userRepository.deleteById(id);
         return new ResponseEntity<String>("User deleted", HttpStatus.OK);
     }

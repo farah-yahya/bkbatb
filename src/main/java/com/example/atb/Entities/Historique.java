@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.Date;
 
 @Entity
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,6 +16,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Historique {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;

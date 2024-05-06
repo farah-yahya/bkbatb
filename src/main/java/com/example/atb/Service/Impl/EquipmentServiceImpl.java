@@ -18,12 +18,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EquipmentServiceImpl implements EquipmentService {
+
     private final EquipmentRepository equipmentRepository;
     private final HistoriqueRepository historiqueRepository;
     private final UserRepository userRepository;
 
     @Override
     public Equipment addEquipment(Equipment equipment) {
+
         Equipment equipment1 = new Equipment();
         Date currentDate = new Date();
         if (equipment.getEntree().before(currentDate) && equipment.getSortie().after(currentDate)) {
@@ -33,6 +35,7 @@ public class EquipmentServiceImpl implements EquipmentService {
                     = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if
             (principal instanceof UserDetails userDetails) {
+
                 equipment1 = equipmentRepository.save(equipment);
                 String
                         username
@@ -46,6 +49,7 @@ public class EquipmentServiceImpl implements EquipmentService {
                 historiqueRepository.save(historique);
             }
         }else {
+
             equipment.setEtat("Disponible");
             equipment1 = equipmentRepository.save(equipment);
         }
@@ -54,6 +58,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public void deleteEquipment(long id) {
+
         if (equipmentRepository.existsById(id)) {
             equipmentRepository.deleteById(id);
         }
@@ -61,6 +66,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public Equipment updateEquipment(long id, Equipment equipment) {
+
         if (equipmentRepository.existsById(id)) {
             Equipment equipment1 = equipmentRepository.findById(id).get();
             equipment1.setName(equipment.getName());
@@ -74,11 +80,13 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public List<Equipment> getEquipments() {
+
         return equipmentRepository.findAll();
     }
 
     @Override
     public Equipment getEquipmentById(long id) {
+
         return equipmentRepository.findById(id).orElse(null);
     }
 }

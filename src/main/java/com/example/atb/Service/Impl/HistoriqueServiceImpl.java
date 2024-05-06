@@ -15,11 +15,13 @@ public class HistoriqueServiceImpl implements HistoriqueService {
 
     @Override
     public Historique addHistorique(Historique historique) {
+
         return historiqueRepository.save(historique);
     }
 
     @Override
     public void deleteHistorique(long id) {
+
         if (historiqueRepository.existsById(id)) {
             historiqueRepository.deleteById(id);
         }
@@ -27,6 +29,7 @@ public class HistoriqueServiceImpl implements HistoriqueService {
 
     @Override
     public Historique updateHistorique(long id, Historique historique) {
+
         if (historiqueRepository.existsById(id)) {
             historique.setId(id);
             historique.setDatePrise(historique.getDatePrise());
@@ -40,15 +43,18 @@ public class HistoriqueServiceImpl implements HistoriqueService {
 
     @Override
     public List<Historique> getHistoriques() {
+
         return historiqueRepository.findAll();
     }
 
     @Override
     public Historique getHistoriqueById(long id) {
+
         return historiqueRepository.findById(id).orElse(null);
     }
     @Override
     public List<Historique> getHistoriquesByEquipementId(Long equipementId) {
+
         return historiqueRepository.findByEquipementId(equipementId);
     }
 }

@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +16,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Atb {
+public class Atb
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id ;

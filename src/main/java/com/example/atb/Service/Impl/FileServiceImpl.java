@@ -22,11 +22,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
+
     private final FileRepository dbFileRepository;
     private final UserService userService;
 
     @Override
     public FileEntity storeFile(MultipartFile file, long userId) {
+
         Optional<FileEntity> fileUser = dbFileRepository.findByUserId(userId);
         fileUser.ifPresent(dbFileRepository::delete);
         // Normalize file name
@@ -52,6 +54,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileEntity getFile(long userId) {
+
         return dbFileRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,

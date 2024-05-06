@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
+
     private final JavaMailSender emailSender;
     @Override
     public void sendSimpleEmail(String to, String subject, String text) {
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);
@@ -25,10 +27,12 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendEmailWithTemplate(User user) {
+
         // Créer une instance de MimeMessage à l'aide de la fonction JavaMailSender
         MimeMessage message = emailSender.createMimeMessage();
 
         try {
+
             MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                     "UTF-8");
 

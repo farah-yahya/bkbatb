@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     @Override
     public List<UserResponse> getUser() {
+
         return userRepository.findAll().stream()
                 .map(this::mapToUserResponse)
                 .collect(Collectors.toList());
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUser(long id,User user) {
+
         User u = userRepository.findById(id).orElseThrow();
         u.setFirstName(user.getFirstName());
         u.setLastName(user.getLastName());
@@ -42,10 +45,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(long userId) {
+
         return userRepository.findById(userId).orElseThrow();
     }
 
     private UserResponse mapToUserResponse(User user) {
+
         return UserResponse.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
